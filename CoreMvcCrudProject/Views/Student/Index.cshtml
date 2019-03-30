@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CoreMvcCrudProject.Models.StudentViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    List<Department> departments = ViewData["Deparments"] as List<Department>;
+}
+
+<h3>Index</h3>
+<hr />
+<h4>Students</h4>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentRoll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentContact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentCode)
+            </th>
+            <th> <a asp-action="RegisterStudent" class="btn btn-success"><i class="fa fa-plus"></i> Add New Student</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentRoll)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentContact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentCode)
+            </td>
+            <td>
+                <a asp-action="RegisterStudent" asp-route-id="@item.StudentId"><i class="fa fa-edit mr-3"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.StudentId" onclick="return confirm('Are you sure you want to delete the Student?')"><i class="fa fa-trash-alt ml-3 text-danger"></i></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<br />
+<br />
+<h4>Departments</h4>
+<table class="table table-bordered table-light">
+    <thead>
+        <tr>
+            <th>Department Name</th>
+            <th>Department Code</th>
+            <th> <a asp-action="AddDepartment" class="btn btn-success"><i class="fa fa-plus"></i> Add New Department</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (departments.Count > 0)
+    {
+        foreach (Department aDepartment in departments)
+        {
+        <tr>
+            <td>@aDepartment.DepartmentName</td>
+            <td>@aDepartment.DepartmentCode</td>
+            <td>
+                <a asp-action="AddDepartment" asp-route-id="@aDepartment.DepartmentId"><i class="fa fa-edit mr-3"></i></a> |
+                <a asp-action="DeleteDept" asp-route-id="@aDepartment.DepartmentId" onclick="return confirm('Are you sure you want to delete the Department?')"><i class="fa fa-trash-alt ml-3 text-danger"></i></a>
+            </td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>
